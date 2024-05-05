@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">my_sepatu</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="buyer" view="colnames">
+<left>118</left>
+<top>324</top>
+<width>81</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `buyer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `phone` varchar(16) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="transaction" view="colnames">
+<left>399</left>
+<top>131</top>
+<width>113</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `transaction` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `product_id` int(11) NOT NULL,
+  `payment_id` int(11) NOT NULL,
+  `buyer_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_transaction_product_id` (`product_id`),
+  KEY `fk_transaction_payment_id` (`payment_id`),
+  KEY `fk_transaction_buyer_id` (`buyer_id`),
+  CONSTRAINT `fk_transaction_buyer_id` FOREIGN KEY (`buyer_id`) REFERENCES `buyer` (`id`),
+  CONSTRAINT `fk_transaction_payment_id` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`id`),
+  CONSTRAINT `fk_transaction_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="category" view="colnames">
+<left>690</left>
+<top>280</top>
+<width>78</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="product" view="colnames">
+<left>137</left>
+<top>28</top>
+<width>113</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `price` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_product_category_id` (`category_id`),
+  CONSTRAINT `fk_product_category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="payment" view="colnames">
+<left>726</left>
+<top>41</top>
+<width>78</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `payment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
